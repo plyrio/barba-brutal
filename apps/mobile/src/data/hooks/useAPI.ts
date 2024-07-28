@@ -1,16 +1,13 @@
 import { useCallback } from 'react'
 
-const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE
+const URL_BASE = 'http://localhost:3001' // process.env.URL_BASE
 
 export default function useAPI() {
+    console.log('URL_BASE', URL_BASE)
     const httpGet = useCallback(async function (uri: string): Promise<any> {
-        try {
-            const res = await fetch(`${URL_BASE}/${uri}`)
-            const data = await res.json()
-            return data
-        } catch (error) {
-            console.error(error)
-        }
+        const res = await fetch(`${URL_BASE}/${uri}`)
+        const data = await res.json()
+        return data
     }, [])
 
     const httpPost = useCallback(async function (uri: string, body: any): Promise<any> {
@@ -18,7 +15,6 @@ export default function useAPI() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${jwt}`,  para validar pegando o token
             },
             body: JSON.stringify(body),
         })
